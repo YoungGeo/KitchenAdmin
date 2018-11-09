@@ -1,5 +1,5 @@
 {
-  "name": "vue-material-dashboard",
+  "name": "mayfield-golf-ordering",
   "version": "1.0.1",
   "private": true,
   "scripts": {
@@ -41,8 +41,8 @@
     "last 2 versions",
     "not ie <= 8"
   ],
-  "author": "dragosct <dragosc@creative-tim.com>",
-  "description": "Vue Material Dashboard",
+  "author": "",
+  "description": "Mayfield Golf Club Mobile Ordering",
   "lint-staged": {
     "*.js": [
       "vue-cli-service lint",

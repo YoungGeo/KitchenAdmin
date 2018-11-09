@@ -19,11 +19,10 @@
       </div>
 
       <div class="actions md-layout md-alignment-center-space-between">
-        <a href="/resetpassword">Reset password</a>
         <md-button class="md-raised md-primary" @click="auth">Log in</md-button>
       </div>
 
-      <div class="loading-overlay" v-if="loading">
+      <div class="loading-overlay " v-if="loading">
         <md-progress-spinner md-mode="indeterminate" :md-stroke="2"></md-progress-spinner>
       </div>
 
