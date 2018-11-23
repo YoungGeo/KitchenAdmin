@@ -17,9 +17,13 @@ import Pending from '@/pages/Order/Pending.vue'
 import InProgress from '@/pages/Order/InProgress.vue'
 import Fulfilled from '@/pages/Order/Fulfilled.vue'
 
-//invoices
+//Invoices
 import Invoices from '@/pages/Invoice/Invoices.vue'
 import ViewInvoices from '@/pages/Invoice/ViewInvoices.vue'
+
+//Accounts
+import Accounts from '@/pages/Account/Accounts.vue'
+import AddAccounts from '@/pages/Account/AddAccounts.vue'
 
 const routes = [
   {
@@ -86,6 +90,16 @@ const routes = [
         path: '/viewinvoices',
         name: 'Invoices',
         component: ViewInvoices
+      },
+      {
+        path: '/accounts',
+        name: 'Accounts',
+        component: Accounts
+      },
+      {
+        path: '/addaccounts',
+        name: 'Add Accounts',
+        component: AddAccounts
       }
     ]
   }

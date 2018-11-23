@@ -110,6 +110,7 @@ export default {
                 ProductPrice: this.products.ProductPrice,
                 MenuId: this.products.MenuId,
                 ProductIsAvailble: this.products.ProductIsAvailble,
+                MenuName: this.products.MenuName,
                 IsAlcohol: this.products.IsAlcohol
           });
           axios({

@@ -12,7 +12,7 @@
                             <md-button class="md-success">View Order</md-button>
                         </md-card-expand-trigger>
                         <div>
-                            <md-button @click="updateOrderStatus(item)" class="md-primary">Send To Kitchen</md-button>
+                            <md-button @click="updateOrderStatus(item)" class="md-primary">Completed</md-button>
                         </div>
 
                     </md-card-actions>

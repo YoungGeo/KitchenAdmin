@@ -29,9 +29,11 @@
           :chart-type="'Bar'"
           data-background-color="red">
           <template slot="content">
-            <h4 class="title">Email Subscription</h4>
+            <h4 class="title">
+              Customer Subscriptions
+            </h4>
               <p class="category">
-                Last Campaign Performance
+                
               </p>
           </template>
 
@@ -74,7 +76,7 @@
             <p class="category">Revenue</p>
             <h3 class="title">$34,245</h3>
           </template>
-
+1
           <template slot="footer">
             <div class="stats">
                 <md-icon>date_range</md-icon>

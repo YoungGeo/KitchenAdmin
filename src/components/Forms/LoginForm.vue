@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import Firebase from "firebase";
+
 export default {
   name: "login-form",
   data() {
@@ -53,14 +55,50 @@ export default {
         this.loading = false;
       }, 5000);
       */
+
      if(this.login.username == "admin" && this.login.password == "password"){
        sessionStorage.authenticated = true;
        location.reload();
      }else{
        sessionStorage.authenticated = false
      }
+    },
 
-     
+    signUp: function() {
+
+      var email = this.username + "@MFG.ca"
+
+      Firebase.auth()
+        .createUserWithEmailAndPassword(email, this.password)
+        .then(
+          user => {
+            sessionStorage.authenticated = true;
+            this.$router.replace('dashboard');
+            location.reload();
+          },
+          error => {
+            alert(error.message);
+            sessionStorage.authenticated = false;
+          }
+        );
+    },
+
+    signIn: function() {
+      var email = this.username + "@MFG.ca"
+
+      Firebase.auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(
+          user => {
+            sessionStorage.userInfo = user
+            sessionStorage.authenticated = true;
+            location.reload();
+          },
+          error => {
+            alert(error.message);
+            sessionStorage.authenticated = false;
+          }
+        );
     }
   }
 };

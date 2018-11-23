@@ -2,7 +2,6 @@
   <div class="wrapper" :class="{'nav-open': $sidebar.showSidebar}">
     <div v-if="boolean">
       <notifications></notifications>
-
       <side-bar>
         <mobile-menu slot="content"></mobile-menu>
         <sidebar-link to="/dashboard">
@@ -38,6 +37,12 @@
         <sidebar-link to="/invoices">
           <md-icon>assignment</md-icon>
           <p>Invoices</p>
+        </sidebar-link>
+        <md-divider></md-divider>
+        <md-subheader style="color: white">Account</md-subheader>
+        <sidebar-link to="/accounts">
+          <md-icon>account_circle</md-icon>
+          <p>Users</p>
         </sidebar-link>
       </side-bar>
 

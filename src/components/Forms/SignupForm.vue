@@ -1,54 +1,237 @@
 <template>
-  <div class="centered-container">
-    <md-content class="md-elevation-3">
+    <div>
+        <form>
+            <md-card>
+                <md-card-header :data-background-color="dataBackgroundColor">
+                    <h4 class="title">Add a staff member account</h4>
+                    <p class="category">This will create a new account</p>
+                </md-card-header>
+                <md-card-content>
+                    <div class="md-layout md-gutter">
+                        <div class="md-layout-item md-size-50">
+                            <md-field>
+                            <label>First Name</label>
+                            <md-input v-model="FirstName" type="text"></md-input>
+                            </md-field>
+                        </div>
 
-      <div class="title">
-        <div class="md-title">Create new user</div>
-      </div>
+                        <div class="md-layout-item md-size-50">
+                            <md-field>
+                            <label>Last Name</label>
+                            <md-input v-model="LastName" type="text"></md-input>
+                            </md-field>
+                        </div>
+                    </div>
+                    <div class="md-layout md-gutter">
+                        <div class="md-layout-item  md-size-35">
+                            <md-field>
+                                <label for="role-type">Role</label>
+                                <md-select v-model="role" name="role-type" id="role-type">
+                                    <md-option value=1>Super User </md-option>
+                                    <md-option value=2>Admin </md-option>
+                                    <md-option value=3>Staff </md-option>
+                                </md-select>
+                            </md-field>
+                        </div>
+                  <p class="category">Roles Help: <br>Super user: No restrictions 
+                  <br>Admin: Able to do everything except add, delete, edit accounts
+                  <br>Staff: Only able to view </p>
+                    </div>
+                    <div class="md-layout md-gutter">
+                        <div class="md-layout-item md-size-50">
+                            <md-field>
+                            <label>Username</label>
+                            <md-input v-model="username" type="text"></md-input>
+                            </md-field>
+                        </div>
+                    </div>
+                    <div class="md-layout md-gutter">
+                        <div class="md-layout-item md-size-50">
+                            <md-field>
+                            <label>Password</label>
+                            <md-input v-model="password" type="password"></md-input>
+                            </md-field>
+                        </div>
 
-      <div class="form">
-        <md-field>
-          <label>Username</label>
-          <md-input v-model="login.username" autofocus></md-input>
-        </md-field>
-
-        <md-field md-has-password>
-          <label>Password</label>
-          <md-input v-model="login.password" type="password"></md-input>
-        </md-field>
-      </div>
-
-      <div class="loading-overlay" v-if="loading">
-        <md-progress-spinner md-mode="indeterminate" :md-stroke="2"></md-progress-spinner>
-      </div>
-
-    </md-content>
-    <div class="background" />
-  </div>
+                        <div class="md-layout-item md-size-50">
+                            <md-field>
+                            <label>Re-type Password</label>
+                            <md-input v-model="repassword" type="password"></md-input>
+                            </md-field>
+                        </div>
+                    </div>
+                    <div class="md-layout md-gutter">
+                        <div class="md-layout-item md-size-100 text-right">
+                            <md-button class="md-raised md-success" @click="signUp()">Add Account</md-button>
+                        </div>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </form>
+    </div>
 </template>
 
 <script>
+import Firebase from "firebase";
+import axios from "axios";
+import qs from "qs";
+
 export default {
-  name: "signup-form",
+  name: "login-form",
+  props: {
+    dataBackgroundColor: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       loading: false,
-      login: {
-        username: "",
-        password: ""
-      }
+      types: ['', 'info', 'success', 'warning', 'danger'],
+      notifications: {
+        topCenter: false
+      },
+      accounts: [],
+      username: "",
+      FirstName: "",
+      LastName: "",
+      role: 0,
+      password: "",
+      repassword: ""
     };
+  },
+  created() {
+    axios.get(`https://mayfieldgolfapi.azurewebsites.net/api/staffaccounts`)
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.accounts = response.data
+      })
+      .catch(e => {
+        console.log(e)
+      });
   },
   methods: {
     auth() {
       // your code to login user
       // this is only for example of loading
-      
+      /*
       this.loading = true;
       setTimeout(() => {
         this.loading = false;
       }, 5000);
+      */
+
+     if(this.login.username == "admin" && this.login.password == "password"){
+       sessionStorage.signedup = true;
+       location.reload();
+     }else{
+       sessionStorage.signedup = false
+     }
+    },
+
+    signUp: function() {
+
+      /*
+      var email = this.username + "@MFG.ca"
       
+      var data = {
+                FirstName: this.menuName,
+                MenuDescription: this.menuDesc,
+                MenuType: this.menuType,
+                EstimatedTime: this.menuETA
+            };
+     
+      Firebase.auth()
+        .createUserWithEmailAndPassword(email, this.password)
+        .then(
+          user => {
+            sessionStorage.user = user;
+          },
+          error => {
+            alert(error.message);
+          }
+        ); 
+        */
+
+
+      var passmatch = (this.password == this.repassword)
+
+      if(passmatch == true){
+        var used = false;
+
+        for (var i = 0; i < this.accounts.length; i++) { 
+          if(this.username.toLowerCase() == this.accounts[i].username.toLowerCase()){
+            used = true
+            console.log(used)
+          }
+        }
+        if(used == false)
+                {
+                  var data = {
+                        FirstName: this.FirstName,
+                        LastName: this.LastName,
+                        username: this.username.toLowerCase(),
+                        Token: this.password,
+                        Role: this.Role
+                    };
+                  axios
+                    .post(
+                    "https://mayfieldgolfapi.azurewebsites.net/api/staffaccounts",
+                    qs.stringify(data)
+                    ).then(response => {
+                        this.notifySuccess("top","center")
+                        this.$router.go(-1);
+                    })
+                    .catch(function(error) {
+                    console.log(error);
+                    });
+                }
+                else{
+                  this.notifyFailed("top","center","Username has been used already, please try again")
+                }
+          }
+          else{
+            this.notifyFailed("top","center","Password does not match, please try again")
+          }
+    },
+    notifySuccess (verticalAlign, horizontalAlign) {
+        var color = Math.floor((Math.random() * 4) + 1)
+        this.$notify(
+        {
+            message: 'Account was created',
+            icon: 'alert',
+            horizontalAlign: horizontalAlign,
+            verticalAlign: verticalAlign,
+            type: this.types[color]
+        })
+    },
+    notifyFailed (verticalAlign, horizontalAlign, message) {
+
+        this.$notify(
+        {
+            message: message,
+            icon: 'alert',
+            horizontalAlign: horizontalAlign,
+            verticalAlign: verticalAlign,
+            type: 'danger'
+        })
+    },
+    signIn: function() {
+      var email = this.username + "@MFG.ca"
+
+      Firebase.auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(
+          user => {
+            sessionStorage.userInfo = user
+            sessionStorage.authenticated = true;
+            location.reload();
+          },
+          error => {
+            alert(error.message);
+            sessionStorage.authenticated = false;
+          }
+        );
     }
   }
 };
