@@ -19,11 +19,15 @@
       </div>
 
       <div class="actions md-layout md-alignment-center-space-between">
-        <md-button class="md-raised md-primary" @click="auth">Log in</md-button>
+        <md-button class="md-raised md-primary" @click="SignIn2">Log in</md-button>
       </div>
 
       <div class="loading-overlay " v-if="loading">
         <md-progress-spinner md-mode="indeterminate" :md-stroke="2"></md-progress-spinner>
+      </div>
+
+      <div v-if="showerr" class="err">
+      <p><strong> USERNAME OR PASSWORD IS INCCORRECT <br> Please try again</strong></p>
       </div>
 
     </md-content>
@@ -33,17 +37,30 @@
 
 <script>
 import Firebase from "firebase";
+import axios from 'axios';
 
 export default {
   name: "login-form",
   data() {
     return {
       loading: false,
+      accounts: [],
+      showerr : false,
       login: {
         username: "",
         password: ""
       }
     };
+  },
+  created() {
+    axios.get(`https://mayfieldgolfapi.azurewebsites.net/api/staffaccounts`)
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.accounts = response.data
+      })
+      .catch(e => {
+        console.log(e)
+      });
   },
   methods: {
     auth() {
@@ -83,7 +100,46 @@ export default {
         );
     },
 
+    SignIn2(){
+
+      sessionStorage.authenticated = false;
+      var none = []
+
+      for(var i = 0; i < this.accounts.length; i++){
+        if(this.accounts[i].username.toLowerCase() == this.login.username.toLowerCase()){
+          if(this.accounts[i].Token == this.login.password)
+          {
+            console.log("success")
+            sessionStorage.authenticated = true;
+            this.showerr = false;
+            none.push(true);
+            location.reload();
+          }
+        }else{
+          none.push(false);
+        }
+      }
+      var result = none.includes(true)
+      if(!result){
+        this.showerr = true
+      }
+    },
+
+    notifyFailed (verticalAlign, horizontalAlign, message) {
+
+        this.$notify(
+        {
+            message: message,
+            icon: 'alert',
+            horizontalAlign: horizontalAlign,
+            verticalAlign: verticalAlign,
+            type: 'danger'
+        })
+    },
+
     signIn: function() {
+
+
       var email = this.username + "@MFG.ca"
 
       Firebase.auth()
@@ -156,6 +212,11 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .err {
+    padding: 10pt;
+    color: red;
+    font-size: 20px;
   }
 }
 </style>

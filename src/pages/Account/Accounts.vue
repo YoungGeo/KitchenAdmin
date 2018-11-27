@@ -56,6 +56,10 @@ export default {
       });
   },
   methods: {
+    edit(item){
+      sessionStorage.EditUserId = item.UserId
+      this.$router.push('editaccounts')
+    },
     deleteitem(item) {
         axios({
             method: "delete",

@@ -19,6 +19,7 @@ import SignupForm from './Forms/SignupForm.vue'
 // Edit Forms
 import ProductEditForm from './EditForms/ProductEditForms.vue'
 import MenuEditForm from './EditForms/MenuEditForms.vue'
+import EditAccountForm from './EditForms/EditAccountForm.vue'
 
 // Veiw Forms
 import InvoiceForm from './Forms/InvoiceForm.vue'
@@ -37,6 +38,7 @@ export {
   MenuForm,
   LoginForm,
   SignupForm,
+  EditAccountForm,
   MenuEditForm,
   InvoiceForm
 }

@@ -58,7 +58,8 @@
     </div>
 
     <div v-if="!boolean">
-      <login-form></login-form>
+        <login-form>
+        </login-form>
     </div>
   </div>
 </template>
@@ -89,6 +90,8 @@ export default {
     return {
       boolean: sessionStorage.authenticated
     }
+  },
+  created(){
   }
 }
 </script>

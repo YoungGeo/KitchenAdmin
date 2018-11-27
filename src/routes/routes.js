@@ -24,6 +24,10 @@ import ViewInvoices from '@/pages/Invoice/ViewInvoices.vue'
 //Accounts
 import Accounts from '@/pages/Account/Accounts.vue'
 import AddAccounts from '@/pages/Account/AddAccounts.vue'
+import EditAccounts from '@/pages/Account/EditAccounts.vue'
+
+//Login
+import Login from '@/pages/Account/Login.vue'
 
 const routes = [
   {
@@ -31,6 +35,11 @@ const routes = [
     component: DashboardLayout,
     redirect: '/dashboard',
     children: [
+      {
+        path: '/login',
+        name: 'Login',
+        component: Login
+      },
       {
         path: 'dashboard',
         name: 'Dashboard',
@@ -100,6 +109,11 @@ const routes = [
         path: '/addaccounts',
         name: 'Add Accounts',
         component: AddAccounts
+      },
+      {
+        path: '/editaccounts',
+        name: 'Edit Accounts',
+        component: EditAccounts
       }
     ]
   }

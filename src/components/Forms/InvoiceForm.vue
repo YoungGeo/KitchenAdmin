@@ -21,8 +21,6 @@
                             <md-input v-model="invoice.OrderId" type="text" disabled></md-input>
                             </md-field>
                         </div>
-                    </div>
-                    <div class="md-layout md-gutter">
                         <div class="md-layout-item md-size-25">
                             <md-field v-for="cust in custs" :key="cust.CustId" v-if="cust.CustId == invoice.UserId" >
                             <label>Customer First Name</label>
@@ -43,8 +41,6 @@
                             <md-input type="text" v-model="cust.Email" disabled></md-input>
                             </md-field>
                         </div>
-                    </div>
-                    <div class="md-layout md-gutter">
                         <div class="md-layout-item md-size-50">
                             <md-field v-for="cust in custs" :key="cust.CustId" v-if="cust.CustId == invoice.UserId" >
                             <label>Customer Phone</label>
@@ -59,6 +55,7 @@
                                     <md-table-cell md-label="Name">{{ item.name }}</md-table-cell>
                                     <md-table-cell md-label="Quantity">{{ item.quantity }}</md-table-cell>
                                     <md-table-cell md-label="Price per item">{{ item.price }}</md-table-cell>
+                                    <md-table-cell md-label="Totals" >{{ item.price.toFixed(2) * item.quantity.toFixed(2) }}</md-table-cell>
                                 </md-table-row>
                             </md-table>
                         </div>
@@ -67,31 +64,43 @@
                     <md-divider></md-divider>
                     <br>
                     <div class="md-layout md-gutter">
-                        <div class="md-layout-item md-size-25">
+                        <div class="md-layout-item md-size-80"></div>
+                        <div class="md-layout-item md-size-20">
                             <md-field>
                             <label>Total before tax</label>
                             <md-input v-model="invoice.TotalBeforeTax" type="number" disabled></md-input>
                             </md-field>
                         </div>
-                        <div class="md-layout-item md-size-25">
+                    </div>
+                    <div class="md-layout md-gutter">
+                        <div class="md-layout-item md-size-80"></div>
+                        <div class="md-layout-item md-size-20">
                             <md-field>
                             <label>Fees</label>
                             <md-input v-model="invoice.Fees.toFixed(2)" type="number" disabled></md-input>
                             </md-field>
                         </div>
-                        <div class="md-layout-item md-size-25">
+                    </div>
+                    <div class="md-layout md-gutter">
+                        <div class="md-layout-item md-size-80"></div>
+                        <div class="md-layout-item md-size-20">
                             <md-field>
                             <label>Tax</label>
                             <md-input v-model="invoice.Tax.toFixed(2)" type="number" disabled></md-input>
                             </md-field>
                         </div>
-                        <div class="md-layout-item md-size-25">
+                    </div>
+                    <div class="md-layout md-gutter">
+                        <div class="md-layout-item md-size-80"></div>
+                        <div class="md-layout-item md-size-20">
                             <md-field>
                             <label>Total</label>
                             <md-input v-model="invoice.TotalAfterTax.toFixed(2)" type="number" disabled></md-input>
                             </md-field>
                         </div>
-                        <div class="md-layout-item md-size-100 text-left">
+                    </div>
+                    <div class="md-layout md-gutter">
+                        <div class="md-layout-item md-size-100 text-right">
                             <md-button class="md-raised md-danger" @click="back()">Back</md-button>
                         </div>
                     </div>

@@ -26,7 +26,7 @@
                         <div class="md-layout-item  md-size-35">
                             <md-field>
                                 <label for="role-type">Role</label>
-                                <md-select v-model="role" name="role-type" id="role-type">
+                                <md-select v-model="Role" name="role-type" id="role-type">
                                     <md-option value=1>Super User </md-option>
                                     <md-option value=2>Admin </md-option>
                                     <md-option value=3>Staff </md-option>
@@ -95,7 +95,7 @@ export default {
       username: "",
       FirstName: "",
       LastName: "",
-      role: 0,
+      Role: 0,
       password: "",
       repassword: ""
     };
@@ -165,7 +165,12 @@ export default {
             console.log(used)
           }
         }
-        if(used == false)
+
+        
+        var roleId = parseInt(this.Role)
+        console.log(roleId)
+
+        if(used == false && roleId != null)
                 {
                   var data = {
                         FirstName: this.FirstName,
